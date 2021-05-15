@@ -11,7 +11,7 @@ CREATE DATABASE demonstracoes_financeiras
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
------QUERY CRIAÇÃO DE TABELA -----
+-----QUERY CRIAÃ‡ÃƒO DE TABELA -----
 DROP TABLE demonstracao;
 
 CREATE TABLE demonstracao(
@@ -40,13 +40,13 @@ CREATE TABLE RELATORIO_CADOP(
 	DDD VARCHAR,
 	TELEFONE VARCHAR,
 	FAZ VARCHAR,
-	ENDEREÇO_ELETRONICO VARCHAR,
+	ENDEREÃ‡O_ELETRONICO VARCHAR,
 	REPRESENTANTE VARCHAR,
 	CARGO_REPRESENTANTE VARCHAR,
 	DATA_REGISTRO_ANS DATE
 )
 
------QUERY DE INSERÇÃO-------
+-----QUERY DE INSERÃ‡ÃƒO-------
 
 copy relatorio_cadop(
 	REG_ANS,
@@ -64,7 +64,7 @@ copy relatorio_cadop(
 	DDD,
 	TELEFONE,
 	FAZ,
-	ENDEREÇO_ELETRONICO,
+	ENDEREÃ‡O_ELETRONICO,
 	REPRESENTANTE,
 	CARGO_REPRESENTANTE,
 	DATA_REGISTRO_ANS
@@ -180,21 +180,21 @@ CSV HEADER
 encoding 'ISO8859-1'
 
 
----- QUERY DE SELEÇÃO --------
+---- QUERY DE SELEÃ‡ÃƒO --------
 
 
  ------10 MAIORES DESPESAS NO ULTIMO TRISMESTRE-----
-select rc.razao_social as "Razão Social", d.vl_saldo_final as "Saldo Devedor", rc.nome_fantasia as "Nome fantasia", rc.cnpj as "CNPJ", d.data as "DATA"
+select rc.razao_social as "RazÃ£o Social", d.vl_saldo_final as "Saldo Devedor", rc.nome_fantasia as "Nome fantasia", rc.cnpj as "CNPJ", d.data as "DATA"
 from demonstracao as d
 inner join relatorio_cadop as rc on rc.reg_ans = d.reg_ans
-where d.descricao = 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÊNCIA A SAÚDE MEDICO HOSPITALAR ' and d.data BETWEEN '2020-10-01'::DATE AND '2020-12-31'::DATE
+where d.descricao = 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÃŠNCIA A SAÃšDE MEDICO HOSPITALAR ' and d.data BETWEEN '2020-10-01'::DATE AND '2020-12-31'::DATE
 order by cast(LTrim(RTrim(replace (d.vl_saldo_final, ',','.'))) as numeric(20,2))
 limit 10
 -----------10 MAIORES DESPESAS NO ULTIMO ANO---------
-select rc.razao_social as "Razão Social", d.vl_saldo_final as "Saldo Devedor", rc.nome_fantasia as "Nome fantasia", rc.cnpj as "CNPJ", d.data as "DATA"
+select rc.razao_social as "RazÃ£o Social", d.vl_saldo_final as "Saldo Devedor", rc.nome_fantasia as "Nome fantasia", rc.cnpj as "CNPJ", d.data as "DATA"
 from demonstracao as d
 inner join relatorio_cadop as rc on rc.reg_ans = d.reg_ans
-where d.descricao = 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÊNCIA A SAÚDE MEDICO HOSPITALAR ' and d.data BETWEEN '2020-01-01'::DATE AND '2020-12-31'::DATE
+where d.descricao = 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÃŠNCIA A SAÃšDE MEDICO HOSPITALAR ' and d.data BETWEEN '2020-01-01'::DATE AND '2020-12-31'::DATE
 order by cast(LTrim(RTrim(replace (d.vl_saldo_final, ',','.'))) as numeric(20,2))
 limit 10
 
