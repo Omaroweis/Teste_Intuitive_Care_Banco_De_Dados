@@ -1,15 +1,15 @@
 -- Database: demonstracoes_financeiras
 
--- DROP DATABASE demonstracoes_financeiras;
+DROP DATABASE demonstracoes_financeiras;
 
-CREATE DATABASE demonstracoes_financeiras
-    WITH 
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Portuguese_Brazil.1252'
-    LC_CTYPE = 'Portuguese_Brazil.1252'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
+--CREATE DATABASE demonstracoes_financeiras
+--   WITH 
+--    OWNER = postgres
+--    ENCODING = 'UTF8'
+--    LC_COLLATE = 'Portuguese_Brazil.1252'
+--    LC_CTYPE = 'Portuguese_Brazil.1252'
+--   TABLESPACE = pg_default
+--    CONNECTION LIMIT = -1;
 
 -----QUERY CRIAÇÃO DE TABELA -----
 DROP TABLE demonstracao;
@@ -101,6 +101,7 @@ DELIMITER ';'
 CSV HEADER
 encoding 'ISO8859-1'
 --------------
+
 copy demonstracao
 (
 	DATA,
@@ -114,6 +115,7 @@ DELIMITER ';'
 CSV HEADER
 encoding 'ISO8859-1'
 -------------
+
 copy demonstracao
 (
 	DATA,
@@ -179,6 +181,25 @@ DELIMITER ';'
 CSV HEADER
 encoding 'ISO8859-1'
 
+-----ADICIONANDO CONSTRAINTS -----
+
+ALTER TABLE relatorio_cadop
+add constraint PK 
+PRIMARY KEY (reg_ans)
+
+
+ALTER TABLE demonstracao
+ADD constraint PK_demonstracao
+primary key(reg_ans, cd_conta_contabil, data)
+
+-- erro pois existem linhas vazias nessa coluna em relatorio cadop. 
+--ALTER TABLE demonstracao
+--ADD constraint FK
+--FOREIGN KEY(reg_ans) 
+--REFERENCES relatorio_cadop(reg_ans)
+
+
+
 
 ---- QUERY DE SELEÇÃO --------
 
@@ -197,4 +218,3 @@ inner join relatorio_cadop as rc on rc.reg_ans = d.reg_ans
 where d.descricao = 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÊNCIA A SAÚDE MEDICO HOSPITALAR ' and d.data BETWEEN '2020-01-01'::DATE AND '2020-12-31'::DATE
 order by cast(LTrim(RTrim(replace (d.vl_saldo_final, ',','.'))) as numeric(20,2))
 limit 10
-
